@@ -43,29 +43,3 @@ plt.xlabel('Kondisi Cuaca (1: Cerah, 2: Berkabut, 3: Hujan Ringan, 4: Hujan Leba
 plt.ylabel('Jumlah Sewa')
 st.pyplot(plt)
 
-# Pola Sewa Sepeda Berdasarkan Hari
-st.subheader('Pola Sewa Sepeda Berdasarkan Hari')
-weekday_hour_df = filtered_hour_df.groupby(['weekday', 'hr'])['cnt'].mean().reset_index()
-weekday_hour_df = weekday_hour_df.pivot_table(values='cnt', index='weekday', columns='hr')  # Gunakan pivot_table()
-plt.figure(figsize=(12, 6))
-sns.heatmap(weekday_hour_df, cmap='coolwarm')
-plt.title('Pola Sewa Sepeda Berdasarkan Hari')
-plt.xlabel('Jam per hari')
-plt.ylabel('Hari dalam satu minggu (0: Minggu, 6: Sabtu)')
-st.pyplot(plt)
-
-# Jumlah Pengguna Kasual vs Terdaftar
-st.subheader('Jumlah Pengguna Kasual vs Terdaftar')
-
-# Konversi kolom dteday ke string dengan format YYYY-MM-DD
-filtered_day_df['dteday'] = filtered_day_df['dteday'].dt.strftime('%Y-%m-%d')
-
-plt.figure(figsize=(10, 6))
-sns.barplot(x='dteday', y='casual', data=filtered_day_df, label='Kasual', color='skyblue')
-sns.barplot(x='dteday', y='registered', data=filtered_day_df, label='Terdaftar', color='coral', bottom=filtered_day_df['casual'])
-plt.xlabel('Tanggal')
-plt.ylabel('Jumlah Pengguna')
-plt.xticks(rotation=45)
-plt.legend()
-st.pyplot(plt)
-
